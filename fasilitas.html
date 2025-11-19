@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Fasilitas — FMIPA</title>
+
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    referrerpolicy="no-referrer" />
+</head>
+<body>
+
+    <nav>
+    <div class="nav-inner">
+      <a class="logolink" href="tentangkami.html"><img src="image/logo.png" alt="Logo FMIPA"></a>
+      <div class="navigation">
+        <ul>
+          <li><a href="tentangkami.html">Tentang Kami</a></li>
+          <li><a href="fasilitas.html" class="active">Fasilitas</a></li>
+          <li><a href="kemahasiswaan.html">Kemahasiswaan</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header id="fasilitas-hero" class="hero">
+    <div class="container">
+      <h1>Fasilitas</h1>
+      <p class="lead">Daftar ruangan dan fasilitas per cluster (lantai/area).</p>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top:1.25rem;">
+
+    <div class="fasilitas-layout">
+
+      <aside class="cluster-side">
+        <div class="cluster-list">
+          <button class="cluster-btn active" data-cluster="1" data-count="20">Cluster 1</button>
+          <button class="cluster-btn" data-cluster="2" data-count="17">Cluster 2</button>
+          <button class="cluster-btn" data-cluster="3" data-count="10">Cluster 3</button>
+          <button class="cluster-btn" data-cluster="4" data-count="20">Cluster 4</button>
+
+        </div>
+      </aside>
+
+      <section class="fasilitas-main">
+
+        <div class="table-actions">
+          <div class="search-box">
+            <input id="search-input" placeholder="Cari nama / kode..." />
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="table-simple table-fasilitas" aria-live="polite">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Kode Ruangan</th>
+                <th>Nama Ruangan</th>
+              </tr>
+            </thead>
+            <tbody id="fasilitas-tbody">
+              <!-- JS akan isi baris di sini -->
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pager" id="pager">
+          <button id="prev-page" class="pager-btn" aria-label="Halaman sebelumnya">Prev</button>
+          <div id="page-numbers" class="page-numbers"></div>
+          <button id="next-page" class="pager-btn" aria-label="Halaman berikutnya">Next</button>
+        </div>
+
+      </section>
+
+    </div>
+
+  </main>
+
+    <footer id="footer">
+        <div class="footer-container">
+
+            <div class="footer-left">
+                <img src="image/logo.png" class="footer-logo" alt="">
+                <h2>FAKULTAS MATEMATIKA DAN ILMU PENGETAHUAN ALAM</h2>
+                <p><i class="fas fa-map-marker-alt"></i>JL. Prof. Dr. H. Hadari Nawawi - Kode Pos: 78124</p>
+                <p><i class="fas fa-phone-alt"></i> (0561) 577963</p>
+                <p><i class="fas fa-envelope"></i>info@fmipa.untan.ac.id</p>
+            </div>
+
+            <div class="footer-middle">
+                <ul>
+                    <li>Siakad</li>
+                    <li>E-Learning</li>
+                    <li>Website Kampus</li>
+                    <li>Layanan IT</li>
+                </ul>
+            </div>
+
+            <div class="footer-right">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.8161239285587!2d109.34396307358881!3d-0.06011989993927903!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e1d599127523ec9%3A0x752e4fa340c5556d!2sFakultas%20Matematika%20dan%20Ilmu%20Pengetahuan%20Alam%20(F-MIPA)%20-%20Untan!5e0!3m2!1sid!2sid!4v1763421208601!5m2!1sid!2sid" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© <span id="year"></span> FMIPA UNTAN</p>
+        </div>
+    </footer>
+
+<script>
+
+const clusters = {
+  1: [
+    ['H 1.1.1.1','Toilet'],
+    ['H 1.1.1.2','Pantri'],
+    ['H 1.1.1.3','Ruang Kalab Kimia'],
+    ['H 1.1.1.4','Ruang Timbang'],
+    ['H 1.1.1.5','Ruang Baca S2 Kimia'],
+    ['H 1.1.1.6','Ruang Laboran dan Alat'],
+    ['H 1.1.1.7','Ruang Spektrofotometer'],
+    ['H 1.1.1.8','Ruang Bahan Kimia Cair dan Padat'],
+    ['H 1.1.1.9','Lab Kimia A'],
+    ['H 1.1.1.10','Ruang Dosen Kimia'],
+    ['H 1.1.1.11','Ruang Kajur dan Dosen Biologi'],
+    ['H 1.1.1.12','Lab Biologi Dasar'],
+    ['H 1.1.1.13','Ruang Baca, Berkas dan Laboran Biologi'],
+    ['H 1.1.1.14','Ruang Dosen Biologi 5'],
+    ['H 1.1.1.15','Ruang Laboran Biologi dan Berkas'],
+    ['H 1.1.1.16','Ruang Dosen Biologi 4'],
+    ['H 1.1.1.17','Ruang Dosen Biologi 3'],
+    ['H 1.1.1.18','Ruang Dosen Biologi 2'],
+    ['H 1.1.1.19','Ruang Dosen Biologi 1'],
+    ['H 1.2.1.1','Rumah Anggrek']
+  ],
+  2: [
+    ['H 2.1.1.1','Ruang Dosen Jurusan Fisika'],
+    ['H 2.1.1.2','Ruang Kalab Jurusan Fisika'],
+    ['H 2.1.1.3','Lab Fisika Dasar'],
+    ['H 2.1.1.4','Gudang'],
+    ['H 2.1.1.5','Toilet'],
+    ['H 2.1.1.6','Lab Simulasi Fisika'],
+    ['H 2.1.1.7','Lab Geofisika'],
+    ['H 2.1.1.8','Ruang Kelas'],
+    ['H 2.1.1.9','Gudang'],
+    ['H 2.1.1.10','Ruang Pigmen'],
+    ['H 2.1.1.11','Lab Fisika Lanjut'],
+    ['H 2.1.1.12','Ruang AAS'],
+    ['H 2.1.1.13','Lab Riset Kimia Anorganik-Fisik'],
+    ['H 2.1.1.14','Ruang Kalab Bioteknologi & Riset'],
+    ['H 2.1.1.15','Laboratorium Bioteknologi'],
+    ['H 2.1.1.16','Ruang Dosen Ilmu Kelautan'],
+    ['H 2.1.1.17','Lab Ilmu Kelautan']
+  ],
+  3: [
+    ['H 3.1.1.1','Toilet Wanita'],
+    ['H 3.1.1.2','Lab Komputer A'],
+    ['H 3.1.1.3','Lab Komputer B'],
+    ['H 3.1.1.4','Ruang Dosen Resiskom'],
+    ['H 3.1.1.5','Lab Workshop'],
+    ['H 3.1.1.6','Toilet Pria'],
+    ['H 3.1.2.1','Ruang Jurusan Resiskom'],
+    ['H 3.1.2.2','Ruang Siskom 3'],
+    ['H 3.1.2.3','Ruang Siskom 2'],
+    ['H 3.1.2.4','Ruang Siskom 1']
+  ],
+  4: [
+    ['H 4.1.1.1','Toilet'],
+    ['H 4.1.1.2','Ruang Cleaning Service'],
+    ['H 4.1.1.3','Ruang Kelas'],
+    ['H 4.1.1.4','Ruang Kelas'],
+    ['H 4.1.1.5','Ruang Umum & Perlengkapan'],
+    ['H 4.1.1.6','Ruang Kelas'],
+    ['H 4.1.1.7','Ruang Arsip'],
+    ['H 4.1.1.8','Ruang Akademik & Kemahasiswaan'],
+    ['H 4.1.1.9','Ruang Kepegawaian'],
+    ['H 4.1.1.10','Gudang Perlengkapan'],
+    ['H 4.1.1.11','Ruang Tamu'],
+    ['H 4.1.1.12','Ruang Baca FMIPA'],
+    ['H 4.1.2.1','Toilet'],
+    ['H 4.1.2.2','Ruang Cleaning Service'],
+    ['H 4.1.2.3','Smart Area'],
+    ['H 4.1.2.4','Ruang Kelas'],
+    ['H 4.1.2.5','Ruang Jurusan Kimia S1'],
+    ['H 4.1.2.6','Ruang Kelas'],
+    ['H 4.1.2.7','Ruang Kelas'],
+    ['H 4.1.2.8','Ruang Kelas']
+  ]
+};
+
+const PAGE_SIZE = 10;
+
+
+const trunc = (s, n=10) => s ? (s.length > n ? s.slice(0,n) + '…' : s) : '';
+
+let state = { cluster: 1, page: 1, filtered: [] };
+
+function renderTable() {
+  const data = state.filtered.length ? state.filtered : clusters[state.cluster] || [];
+  const tbody = document.getElementById('fasilitas-tbody');
+  tbody.innerHTML = '';
+
+  const start = (state.page - 1) * PAGE_SIZE;
+  const slice = data.slice(start, start + PAGE_SIZE);
+
+  slice.forEach((row, idx) => {
+    const no = start + idx + 1;
+    const tr = document.createElement('tr');
+    const tdNo = document.createElement('td'); tdNo.textContent = no; tr.appendChild(tdNo);
+    const tdKode = document.createElement('td'); tdKode.textContent = row[0]; tr.appendChild(tdKode);
+    const tdNama = document.createElement('td');
+    tdNama.textContent = trunc(row[1], 10);
+    tdNama.title = row[1];
+    tr.appendChild(tdNama);
+    tbody.appendChild(tr);
+  });
+
+  renderPager(Math.ceil(data.length / PAGE_SIZE));
+}
+
+function renderPager(totalPages) {
+  const pageNumbers = document.getElementById('page-numbers');
+  pageNumbers.innerHTML = '';
+  document.getElementById('prev-page').disabled = state.page <= 1;
+  document.getElementById('next-page').disabled = state.page >= totalPages || totalPages === 0;
+
+  for (let i=1;i<=totalPages;i++) {
+    const btn = document.createElement('button');
+    btn.className = 'page-num' + (i===state.page ? ' active' : '');
+    btn.textContent = i;
+    btn.addEventListener('click', ()=> {
+      state.page = i; renderTable();
+      window.scrollTo({top: document.querySelector('.fasilitas-main').offsetTop - 80, behavior:'smooth'});
+    });
+    pageNumbers.appendChild(btn);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', ()=> {
+  state.filtered = [];
+
+  document.querySelectorAll('.cluster-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.program-btn').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      state.cluster = Number(btn.dataset.cluster);
+      state.page = 1;
+      state.filtered = [];
+      const si = document.getElementById('search-input');
+      if (si) si.value = '';
+      renderTable();
+    });
+  });
+
+  document.getElementById('prev-page').addEventListener('click', ()=> {
+    if (state.page > 1) { state.page--; renderTable(); window.scrollTo({top: document.querySelector('.fasilitas-main').offsetTop - 80, behavior:'smooth'}); }
+  });
+  document.getElementById('next-page').addEventListener('click', ()=> {
+    const data = state.filtered.length ? state.filtered : clusters[state.cluster];
+    const total = Math.ceil((data ? data.length : 0) / PAGE_SIZE);
+    if (state.page < total) { state.page++; renderTable(); window.scrollTo({top: document.querySelector('.fasilitas-main').offsetTop - 80, behavior:'smooth'}); }
+  });
+
+  const searchInput = document.getElementById('search-input');
+  searchInput.addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    const base = clusters[state.cluster] || [];
+    if (!q) { state.filtered = []; state.page = 1; renderTable(); return; }
+    state.filtered = base.filter(r => (r[0] + ' ' + r[1]).toLowerCase().includes(q));
+    state.page = 1;
+    renderTable();
+  });
+
+  const menuBtn = document.getElementById('menu-btn');
+  if (menuBtn) {
+    menuBtn.addEventListener('click', ()=> {
+      const navList = document.querySelector('nav .navigation ul');
+      if (navList) navList.classList.toggle('active');
+    });
+  }
+
+  const yearEl = document.getElementById('year'); if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+  renderTable();
+});
+</script>
+
+</body>
+</html>
